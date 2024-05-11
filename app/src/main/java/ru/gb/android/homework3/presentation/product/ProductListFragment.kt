@@ -1,5 +1,6 @@
 package ru.gb.android.homework3.presentation.product
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +13,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
+import ru.gb.android.homework3.MarketSampleApp
 import ru.gb.android.homework3.marketsample.databinding.FragmentProductListBinding
 import ru.gb.android.homework3.presentation.product.adapter.ProductsAdapter
+import javax.inject.Inject
 
 class ProductListFragment : Fragment() {
 
@@ -22,10 +25,21 @@ class ProductListFragment : Fragment() {
 
     private val adapter = ProductsAdapter()
 
+    @Inject
+    lateinit var viewModelFactory: ProductListViewModelFactory
+
     private val viewModel: ProductListViewModel by viewModels {
-        FeatureServiceLocator.provideViewModelFactory()
+            viewModelFactory
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        (activity?.applicationContext as MarketSampleApp).appComponent
+            .productListComponentFactory()
+            .create()
+            .inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

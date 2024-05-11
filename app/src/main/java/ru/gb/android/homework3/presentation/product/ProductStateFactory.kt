@@ -4,8 +4,9 @@ import ru.gb.android.homework3.domain.product.Product
 import ru.gb.android.homework3.domain.promo.Promo
 import ru.gb.android.homework3.presentation.common.DiscountFormatter
 import ru.gb.android.homework3.presentation.common.PriceFormatter
+import javax.inject.Inject
 
-class ProductStateFactory(
+class ProductStateFactory @Inject constructor(
     private val discountFormatter: DiscountFormatter,
     private val priceFormatter: PriceFormatter,
 ) {

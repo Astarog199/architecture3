@@ -1,9 +1,13 @@
 package ru.gb.android.homework3.data.product
 
-class ProductRemoteDataSource(
+interface ProductRemoteDataSource {
+    suspend fun getProducts(): List<ProductDto>
+}
+
+class ProductRemoteDataSourceImpl(
     private val productApiService: ProductApiService,
-) {
-    suspend fun getProducts(): List<ProductDto> {
+) : ProductRemoteDataSource {
+    override suspend fun getProducts(): List<ProductDto> {
         return productApiService.getProducts()
     }
 }

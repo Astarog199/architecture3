@@ -3,10 +3,13 @@ package ru.gb.android.homework3.presentation.product
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
+import ru.gb.android.homework3.di.FeatureScope
 import ru.gb.android.homework3.domain.product.ConsumeProductsUseCase
 import ru.gb.android.homework3.domain.promo.ConsumePromosUseCase
+import javax.inject.Inject
 
-class ProductListViewModelFactory(
+@FeatureScope
+class ProductListViewModelFactory @Inject constructor(
     private val consumeProductsUseCase: ConsumeProductsUseCase,
     private val productStateFactory: ProductStateFactory,
     private val consumePromosUseCase: ConsumePromosUseCase,

@@ -10,14 +10,21 @@ import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
+import javax.inject.Inject
 
-class ProductLocalDataSource(
+//interface ProductLocalDataSource {
+//    fun consumeProducts(): Flow<List<ProductEntity>>
+//    suspend fun saveProducts(products: List<ProductEntity>)
+//}
+
+class ProductLocalDataSource @Inject constructor (
     private val dataStore: DataStore<Preferences>,
-) {
-    fun consumeProducts(): Flow<List<ProductEntity>> = dataStore.data
+)  {
+
+     fun consumeProducts(): Flow<List<ProductEntity>> = dataStore.data
         .map(::mapProductFromPrefs)
 
-    suspend fun saveProducts(products: List<ProductEntity>) {
+     suspend fun saveProducts(products: List<ProductEntity>) {
         dataStore.edit { prefs -> prefs[productPreferencesKey] = encodeToString(products) }
     }
 

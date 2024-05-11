@@ -1,5 +1,6 @@
 package ru.gb.android.homework3.presentation.promo
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +13,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
+import ru.gb.android.homework3.MarketSampleApp
 import ru.gb.android.homework3.marketsample.databinding.FragmentPromoListBinding
 import ru.gb.android.homework3.presentation.promo.adapter.PromoAdapter
+import javax.inject.Inject
 
 class PromoListFragment : Fragment() {
 
@@ -22,8 +25,20 @@ class PromoListFragment : Fragment() {
 
     private val adapter = PromoAdapter()
 
+    @Inject
+    lateinit var viewModelFactory: PromoListViewModelFactory
+
     private val viewModel: PromoListViewModel by viewModels {
-        FeatureServiceLocator.provideViewModelFactory()
+        viewModelFactory
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        (activity?.applicationContext as MarketSampleApp).appComponent
+            .promoListComponentFactory()
+            .create()
+            .inject(this)
     }
 
     override fun onCreateView(

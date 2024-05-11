@@ -7,8 +7,9 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProductRepository(
+class ProductRepository @Inject constructor(
     private val productLocalDataSource: ProductLocalDataSource,
     private val productRemoteDataSource: ProductRemoteDataSource,
     private val productDataMapper: ProductDataMapper,
